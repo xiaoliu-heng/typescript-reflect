@@ -1,12 +1,12 @@
-// Import stylesheets
-import "./style.css";
 import "reflect-metadata";
+import { PATH_META, METHOD_META } from "./constants"
 
 const creteRequestDecorator = (method: string) => (path: string) => {
-  return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target, propertyKey: string, descriptor: PropertyDescriptor) {
     const type = Reflect.getMetadata("design:type", target, propertyKey);
-    console.log("f()", type, descriptor.value);
-    Reflect.defineMetadata("PATH", path, descriptor.value);
+    Reflect.defineMetadata(PATH_META, path, descriptor.value);
+    console.log("f()", type, path, descriptor.value);
+
   };
 };
 
@@ -39,6 +39,8 @@ class Test {
   }
 }
 
-// Write TypeScript code!
-const appDiv: HTMLElement = document.getElementById("app");
-appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
+new Test()
+
+while (true) {
+
+}
