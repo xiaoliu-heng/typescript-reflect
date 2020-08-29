@@ -2,13 +2,15 @@
 import "./style.css";
 import "reflect-metadata";
 
-function f(path?: string) {
+const creteRequestDecorator = (method: string) => (path: string) => {
   return function(target, propertyKey: string, descriptor: PropertyDescriptor) {
     const type = Reflect.getMetadata("design:type", target, propertyKey);
-    console.log("f()", type);
+    console.log("f()", type, descriptor.value);
     Reflect.defineMetadata("PATH", path, descriptor.value);
   };
-}
+};
+
+const GET = creteRequestDecorator("get");
 
 function g(options?: { item?: Object }) {
   return (target, key): void => {
@@ -31,8 +33,8 @@ class Test {
   @g({ item: Photo })
   photos: Array<Photo>;
 
-  @f()
-  setName(): string {
+  @GET("/name")
+  getName(): string {
     return "";
   }
 }
